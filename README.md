@@ -24,8 +24,6 @@ A browser-based tank combat game inspired by the classic Battle City. **Zero dep
 | Fire    | Space       | Enter    |
 | Pause   | P / Escape  | P / Escape |
 | Edit    | E           | —        |
-| Bullet mode | B      | —        |
-| Reset   | R           | —        |
 | Undo    | Ctrl+Z      | —        |
 
 - **Start / Resume** — Enter
@@ -95,10 +93,6 @@ Accessible via the ⚙ button in the sidebar.
 
 1. Open `index.html` in any modern browser (Chrome, Firefox, Edge, Safari).
 2. No server, no build step, no `npm install` — it just works.
-
-To serve locally (optional):
-```sh
-python -m http.server 8080
 
 ## Disclaimer
 This is a fan project created for educational and personal-use purposes. Inspired by Battle City (Namco, 1985). All original trademarks belong to their respective owners.
