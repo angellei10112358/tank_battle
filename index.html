@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- creator: Lei Zhang -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -1326,9 +1327,9 @@ function switchMode(modeName){
   if(modeName==='campaign'){
     initMapFromLevel(currentLevel);
     document.getElementById('levelDisplay').textContent=_(`lv.${currentLevel+1}`);
-  }else if(modeName==='endless'){
-    if(!mapEdited){map=cloneMap(LEVELS[0].map);initTreeLayer();updateGameGrid();mapEdited=false;undoStack=[]}
-    endlessWave=1;totalEnemies=5+endlessWave*2;
+    }else if(modeName==='endless'){
+      if(!map||!map.length){map=cloneMap(LEVELS[0].map);initTreeLayer();updateGameGrid();undoStack=[]}
+      endlessWave=1;totalEnemies=5+endlessWave*2;undoStack=[];
   }else if(modeName==='custom'){
     if(!mapEdited&&(!map||!map.length)){map=cloneMap(LEVELS[0].map);initTreeLayer();updateGameGrid()}
     totalEnemies=customEnemies;undoStack=[];
@@ -1357,10 +1358,8 @@ function startGame(){
 function resetGame(){
   if(frameId)cancelAnimationFrame(frameId);
   if(gameMode==='campaign'){initMapFromLevel(currentLevel);mapEdited=false}
-  else if(originalMap){restoreMap();mapEdited=false}
-  else{map=cloneMap(LEVELS[0].map);initTreeLayer();updateGameGrid();mapEdited=false}
-  if(gameMode==='endless'){endlessWave=1;totalEnemies=5+endlessWave*2}
-  else if(gameMode==='custom')totalEnemies=customEnemies
+  else if(gameMode==='endless'){endlessWave=1;totalEnemies=5+endlessWave*2}
+  else{if(originalMap){restoreMap();mapEdited=false}else{map=cloneMap(LEVELS[0].map);initTreeLayer();updateGameGrid();mapEdited=false};if(gameMode==='custom')totalEnemies=customEnemies}
   lives=3;score=0;kills=0;enemiesSpawned=0;fastEnemiesSpawned=0;heavyEnemiesSpawned=0;enemiesAlive=[];bullets=[];particles=[];powerups=[];shieldTimer=0;freezeTimer=0;speedTimer=0;rapidTimer=0;baseWallsBuilt=false;bulletPower=1;player=null;player2=null;
   gameState='menu';updateUI();gameLoop();
 }
@@ -1435,7 +1434,7 @@ function updateLevelSelect(){
     b.addEventListener('click',()=>{
       if(i+1<=unlockedLevel){
         if(frameId)cancelAnimationFrame(frameId);
-        currentLevel=i;gameState='menu';player=null;enemiesAlive=[];bullets=[];particles=[];
+        currentLevel=i;gameState='menu';player=null;player2=null;enemiesAlive=[];bullets=[];particles=[];
         enemiesSpawned=0;fastEnemiesSpawned=0;kills=0;score=0;lives=3;undoStack=[];
         initMapFromLevel(i);
         if(mode==='edit')toggleEdit();
